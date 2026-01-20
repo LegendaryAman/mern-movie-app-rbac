@@ -44,3 +44,46 @@ export const searchMovies = async (req, res) => {
     }
   };
   
+  export const addMovie = async (req, res) => {
+    try {
+      const movie = await Movie.create(req.body);
+      res.status(201).json(movie);
+    } catch (error) {
+      res.status(400).json({ message: "Failed to add movie" });
+    }
+  };
+
+  
+  export const updateMovie = async (req, res) => {
+    try {
+      const movie = await Movie.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        { new: true }
+      );
+  
+      if (!movie) {
+        return res.status(404).json({ message: "Movie not found" });
+      }
+  
+      res.status(200).json(movie);
+    } catch (error) {
+      res.status(400).json({ message: "Failed to update movie" });
+    }
+  };
+
+  
+  export const deleteMovie = async (req, res) => {
+    try {
+      const movie = await Movie.findByIdAndDelete(req.params.id);
+  
+      if (!movie) {
+        return res.status(404).json({ message: "Movie not found" });
+      }
+  
+      res.status(200).json({ message: "Movie deleted successfully" });
+    } catch (error) {
+      res.status(400).json({ message: "Failed to delete movie" });
+    }
+  };
+   
