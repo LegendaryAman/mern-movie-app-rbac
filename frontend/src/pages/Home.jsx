@@ -38,6 +38,18 @@ function Home() {
           <p>{movie.description}</p>
         </div>
       ))}
+
+      <button onClick={() => {
+        api.delete(`/movies/${movie._id}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          }
+        })
+        .then(() => alert("Deleted"))
+      }}>
+        Delete
+      </button>
+
     </div>
   );
 }
